@@ -1,0 +1,57 @@
+﻿<section class="panel">
+
+    <div class="panel-body">
+        <div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <form id="profileForm" role="form" class="form-profile">
+                        <div class="row">
+                           <!-- <div class="col-md-3">
+                                <img src="../../images/avatar1.jpg" id="imgProfile" alt="Image" class="img-circle">
+                                <div style="display: none;">
+                                    <input type="file" id="ifProfilrImage" />
+                                </div>
+                            </div>-->
+                            <div class="col-md-9">
+                                <div class="form-group">
+                                    <label>Profile Information</label>
+                                    <input type="text" class="form-control" id="txtFName" name="txtFName" placeholder="First Name">
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" class="form-control" id="txtLName" name="txtLName" placeholder="Last Name">
+                                </div>
+                                <div class="form-group">
+                                    <input type="email" class="form-control" id="txtEmail" name="txtEmail" disabled placeholder="Email">
+                                </div>
+                                <button id="btnUpdateProfile" type="submit" class="btn btn-info">Save Updates</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="col-md-6">
+                    <form id="changePasswordForm" role="form" class="form-profile">
+                        <div class="form-group">
+                            <label>Change  password</label>
+                            <input type="password" class="form-control" id="Password1" name="txtOldPassword" placeholder="Old Password">
+                        </div>
+                        <div class="form-group">
+                            <input type="password" class="form-control" id="Password2" name="txtNewPassword" placeholder="new Password">
+                        </div>
+                        <div class="form-group">
+                            <input type="password" class="form-control" id="Password3" name="txtConfirmPassword" placeholder="confirm Password">
+                        </div>
+                        <button id="btnChangePassword" type="submit" class="btn btn-info">Save new password</button>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</section>
+
+<script>
+    require(['pages/profile/profile'], function (p) { p.init(); });
+</script>

@@ -1,0 +1,57 @@
+﻿<style type="text/css">
+    .table-bordered, table.display thead th  {
+        border:none 0;
+    }
+    #profileForm label, #profileForm input{
+        width:93%;
+    }
+    #profileForm .saveUpdatesBtn{
+        width: 140px;
+        margin: 35px 4% 15px 0px;
+    }
+    #profileForm .form-group {
+        width:100%;
+    }
+        .glyphicon-refresh-animate {
+    -animation: spin .7s infinite linear;
+    -webkit-animation: spin2 .7s infinite linear;
+}
+
+@-webkit-keyframes spin2 {
+    from { -webkit-transform: rotate(0deg);}
+    to { -webkit-transform: rotate(360deg);}
+}
+
+@keyframes spin {
+    from { transform: scale(1) rotate(0deg);}
+    to { transform: scale(1) rotate(360deg);}
+}
+</style>
+
+
+<div class="row">
+    <div class="col-sm-12">
+        <section class="panel">
+            <div class="panel-body">
+                <div class="adv-table">
+                    <table cellpadding="0" cellspacing="0" border="0" class="display table table-bordered" id="hidden-table-info">
+                        <thead>
+                            <tr>
+                                <th>Registeration Date</th>
+                                <th>First Name</th>
+                                <th>Last Name</th>
+                                <th>Email</th>
+                                <th>Role</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+<script>
+    require(['pages/userManagement/userManagement'], function (p) { p.init(); });
+</script>

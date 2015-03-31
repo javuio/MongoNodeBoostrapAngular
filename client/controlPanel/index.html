@@ -1,0 +1,128 @@
+﻿<!DOCTYPE html>
+<html lang="en" >
+<!--<html lang="en" manifest="controlpanel.appcache">-->
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="javu.io skeleton">
+    <meta name="author" content="javu.io">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="shortcut icon" href="/images/favicon.png">
+    <title>Control Panel</title>
+
+    <script type="text/javascript" src="/scripts/lib/jquery-2.1.3.min.js"></script>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+
+    <!-- Latest compiled and minified JavaScript
+    <script src="/scripts/lib//bootstrap.min.js"></script>
+    -->
+
+    <!--Core CSS -->
+    <!-- Custom styles for this template -->
+    <link href="/styles/style.css" rel="stylesheet">
+    <link href="/styles/style-responsive.css" rel="stylesheet" />
+
+
+
+
+    <script type="text/javascript" src="/scripts/lib/require.js"></script>
+    <script>
+        requirejs.config({
+            appDir: "../"
+            , baseUrl: 'scripts/framework'
+            , paths: {
+                lib: '../lib'
+                , pages: '../../pages'
+            }
+        });
+
+        ///scope
+        {
+            var fnTimeout = function () {
+                var $loading = $('#sLoadingDC:first');
+                if ($loading.length > 0)
+                    $loading.html('Oops something went wrong. Try refreshing this page. If that doesnt work please contact the system admin');
+            };
+            setTimeout(fnTimeout, 10000);
+        }
+    </script>
+
+    <!-- common api framework -->
+    <script src="/scripts/framework/api.js"></script>
+
+</head>
+<body>
+    <section id="container">
+        <!--header start-->
+        <header class="header fixed-top clearfix">
+            <!--logo start-->
+            <div class="brand">
+                <a href="/" class="logo"><img src="images/logoWhite.png" /></a>
+                <div class="sidebar-toggle-box">
+                    <div class="fa fa-bars"></div>
+                </div>
+            </div>
+
+            <!--logo end-->
+            <div class="nav notify-row" id="top_menu" style="margin-top:0 !important;">
+                <h1 id="pageTitle"></h1>
+
+            </div>
+            <div class="top-nav clearfix">
+                <!--search & user info start-->
+                <ul class="nav pull-right top-menu">
+                    <!-- user login dropdown start-->
+                    <li id="ddlUserProfile" class="dropdown">
+                        <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                            <img alt="" src="images/avatar1_small.jpg">
+                            <span id="currentUserName" class="username"></span>
+                            <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu extended logout">
+                            <li><a href="#profile"><i class=" fa fa-suitcase"></i>Profile</a></li>
+                            <li><a id="profileLogout"><i class="fa fa-key"></i>Log Out</a></li>
+                        </ul>
+                    </li>
+
+                </ul>
+                <!--search & user info end-->
+            </div>
+        </header>
+        <!--header end-->
+        <!--sidebar start-->
+        <aside>
+            <div id="sidebar" class="nav-collapse" >
+                <!-- sidebar menu start-->
+                <div class="leftside-navigation">
+                    <ul class="sidebar-menu" id="nav-accordion"></ul>
+                </div>
+                <!-- sidebar menu end-->
+            </div>
+        </aside>
+        <!--sidebar end-->
+        <!--main content start-->
+        <section id="main-content">
+            <section id="pageContent" class="wrapper">
+                <div class="row">
+                    <div role="alert"></div>
+                    <div id="dynamicContentContainer" class="col-sm-12">
+                        <span id="sLoadingDC" class="floatingText"></span>
+                    </div>
+                </div>
+            </section>
+        </section>
+        <!--main content end-->
+        <div id="div-loading" class="row div-loading" style="display: none">Please wait...</div>
+    </section>
+    <!-- Placed js at the end of the document so the pages load faster -->
+    <!--common script init for all pages-->
+
+    <!-- Page JS -->
+    <script type="text/javascript" src="index.js"></script>
+
+    <script type="text/javascript" src="/scripts/lib/dateTimeFormater.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,25 @@
+{
+  "name": "javu",
+  "version": "0.0.0",
+  "description": "javu.io bolier plate web application template build on popular frameworks",
+  "main": "server.js",
+  "author": {
+    "name": "Daniel Hindi",
+    "email": "support@javu.io"
+  },
+  "dependencies": {
+    "chai": "^1.9.1",
+    "chai-http": "^0.5.0",
+    "express": "4.0.*",
+    "body-parser":"1.11.*",
+    "facebook-api": "*",
+    "mDAL": "*",
+    "passport": "^0.2.0",
+	"passport-token": "*",
+	"cryptr": "1.0.*",
+    "node-uuid":"1.4.*",
+    "winston": "0.8.3",
+    "winston-loggly" : "1.0.2",
+    "longjohn":"0.2.*"
+  }
+}

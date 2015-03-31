@@ -1,0 +1,216 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<!--<html lang="en" manifest="admin.appcache">-->
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="javu.io">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="shortcut icon" href="images/favicon.png">
+    <title>Admin</title>
+    <!--Core CSS -->
+    <link href="/styles/bootstrap.min.css" rel="stylesheet">
+    <link href="/styles/jquery-ui-1.10.3.custom.min.css" rel="stylesheet">
+    <link href="/styles/bootstrap-reset.css" rel="stylesheet">
+    <link href="/styles/font-awesome.min.css" rel="stylesheet" />
+    <link href="/styles/jquery-jvectormap-1.2.2.css" rel="stylesheet" />
+    <link href="/styles/bootstrapValidator.min.css" rel="stylesheet" />
+
+    <!-- Wizard Steps  -->
+    <link rel="stylesheet" href="/styles/jquery.steps.css?1">
+    <!-- Tags Input  -->
+    <link rel="stylesheet" type="text/css" href="/styles/jquery.tagsinput.css" />
+    <!-- File Upload  -->
+    <link rel="stylesheet" type="text/css" href="/styles/bootstrap-fileupload.css" />
+
+    <!-- Timepicker  -->
+    <link rel="stylesheet" type="text/css" href="/styles/timepicker.css" />
+    <!-- Select2 for TimeZone  -->
+    <link rel="stylesheet" type="text/css" href="/styles/select2.css" />
+    <!-- Typeahead -->
+    <link rel="stylesheet" type="text/css" href="/styles/typeaheadjs.css" />
+    <!-- Dropzone -->
+    <link rel="stylesheet" type="text/css" href="/styles/bucketmin.css" />
+    <!-- Morris Graph -->
+    <link href="/styles/morris.css" rel="stylesheet" />
+    <!-- Data Table -->
+    <link href="/styles/data_table.css" rel="stylesheet" />
+    <!-- Custom styles for this template -->
+    <link href="/styles/style.css" rel="stylesheet">
+    <link href="/styles/style-responsive.css" rel="stylesheet" />
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <!-- Optional theme -->
+    <link href="/styles/main.css" rel="stylesheet" />
+
+    <script type="text/javascript" src="/scripts/lib/jquery.min.js"></script>
+    <script type="text/javascript" src="/scripts/lib/jquery-1.8.3.min.js"></script>
+
+    <script type="text/javascript" src="/scripts/lib/jquery.ba-hashchange.min.js"></script>
+
+    <script type="text/javascript" src="/scripts/lib/require.js"></script>
+    <script>
+        requirejs.config({
+            appDir: "../"
+            , baseUrl: 'scripts/framework'
+            //except, if the module ID starts with "lib",
+            //load it from the ../lib directory. paths
+            //config is relative to the baseUrl, and
+            //never includes a ".js" extension since
+            //the paths config could be for a directory.
+            , paths: {
+                lib: '../lib'
+                , pages: '../../pages'
+                , templateJs: '../templateJs'
+                , "jquery": "../lib/jquery.min"
+                , "bootstrap": "../lib/bootstrap.min"
+                , "bootstrapValidator": "../lib/bootstrapValidator.min"
+                , "jquerySteps": "../templateJs/jquery.steps.min"
+                , "select2": "../templateJs/select2"
+                , "tagsinput": "../templateJs/jquery.tagsinput.min"
+                , "typeahead": "../templateJs/typeahead.bundle"
+                , "niceScroll": "../templateJs/jquery.nicescroll"
+                , "tooltip": "../templateJs/jquery.flot.tooltip.min"
+                , "moment": "../templateJs/moment.min"
+                , "morrisGraph": "../templateJs/morris.min"
+                , "raphaelVector": "../templateJs/raphael-min"
+                , "dataTable": "../templateJs/jquery.dataTables.min"
+                , "dataTableBootstrap": "../templateJs/DT_bootstrap"
+            }
+            ,
+            shim: {
+                "bootstrapValidator": { "deps": ['bootstrap'] },
+                "bootstrap": { "deps": ['jquery'] },
+                "jquerySteps": { "deps": ['jquery'] },
+                "select2": { "deps": ['jquery'] },
+                "tagsinput": { "deps": ['jquery'] },
+                "typeahead": { "deps": ['jquery'] },
+                "niceScroll": { "deps": ['jquery'] },
+                "tooltip": { "deps": ['jquery'] },
+                "moment": { "deps": ['jquery'] },
+                "morrisGraph": { "deps": ['jquery'] },
+                "dataTable": { "deps": ['jquery'] },
+                "dataTableBootstrap": { "deps": ['jquery'] }
+            }
+
+        });
+
+        {
+            var fnTimeout = function () {
+                var $loading = $('#sLoadingDC:first')
+                if ($loading.length > 0)
+                    $loading.html('Oops something went wrong. Try refreshing this page. If that doesnt work please contact the system admin');
+            }
+            setTimeout(fnTimeout, 10000);
+        }
+    </script>
+
+    <!-- common api framework -->
+    <script src="/scripts/framework/api.js"></script>
+    <!-- utilities lib -->
+    <script src="/scripts/lib/utilities.js"></script>
+</head>
+<body>
+    <section id="container">
+        <!--header start-->
+        <header class="header fixed-top clearfix">
+            <!--logo start-->
+            <div class="brand">
+                <a href="index.html" class="logo">
+                    <img src="images/badge.png" /></a>
+                <div class="sidebar-toggle-box">
+                    <div class="fa fa-bars"></div>
+                </div>
+            </div>
+
+            <!--logo end-->
+            <div class="nav notify-row" id="top_menu" style="margin-top: 0 !important;">
+                <h1 id="pageTitle"></h1>
+
+            </div>
+            <div class="top-nav clearfix">
+                <!--search & user info start-->
+                <ul class="nav pull-right top-menu">
+                    <!-- user login dropdown start-->
+                    <li id="ddlUserProfile" class="dropdown">
+                        <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                            <img alt="" src="images/avatar1_small.jpg">
+                            <span class="username">John Doe</span>
+                            <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu extended logout">
+                            <li><a href="#profile"><i class=" fa fa-suitcase"></i>Profile</a></li>
+                            <li><a id="profileLogout"><i class="fa fa-key"></i>Log Out</a></li>
+                        </ul>
+                    </li>
+
+
+                </ul>
+                <!--search & user info end-->
+            </div>
+        </header>
+        <!--header end-->
+        <!--sidebar start-->
+        <aside>
+            <div id="sidebar" class="nav-collapse">
+                <!-- sidebar menu start-->
+                <div class="leftside-navigation">
+                    <ul class="sidebar-menu" id="nav-accordion"></ul>
+                </div>
+                <!-- sidebar menu end-->
+            </div>
+        </aside>
+        <!--sidebar end-->
+        <!--main content start-->
+        <section id="main-content">
+            <section id="pageContent" class="wrapper">
+                <div class="row">
+                    <div role="alert"></div>
+                    <div id="dynamicContentContainer" class="col-sm-12">
+                        <span id="sLoadingDC">loading dynamic content... </span>
+                    </div>
+                </div>
+            </section>
+        </section>
+        <!--main content end-->
+        <div id="div-loading" class="row div-loading" style="display: none">
+                <button class="btn btn-lg btn-primary"><span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span>Loading...</button>
+            </div>
+    </section>
+
+    <!-- Placed js at the end of the document so the pages load faster -->
+    <!--Core js-->
+    <!-- autocomplete  -->
+    <script src="/scripts/templateJs/jquery.dcjqaccordion.2.7.js"></script>
+    <script src="/scripts/templateJs/jquery.scrollTo.min.js"></script>
+    <script src="/scripts/templateJs/jquery.slimscroll.min.js"></script>
+    <script src="/scripts/templateJs/skycons.js"></script>
+    <!--common script init for all pages-->
+    <script src="/scripts/templateJs/scripts.js"></script>
+
+    <!--script for this page-->
+    <!-- Date formater -->
+    <script src="/scripts/lib/dateTimeFormater.js"></script>
+
+    <!-- Data filler-->
+    <script src="/scripts/framework/dataBind.js"></script>
+
+    <!-- Input Masking  -->
+    <!--<script src="scripts/templateJs/jquery.mask.min.js"></script>-->
+    <!-- Google places  -->
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places"></script>
+
+    <!-- Page JS -->
+    <script type="text/javascript" src="index.js"></script>
+    <!-- FullCalendar  -->
+    <link href='/styles/fullcalendar.css' rel='stylesheet' />
+    <link href='/styles/fullcalendar.print.css' rel='stylesheet' media='print' />
+    <!-- validation  -->
+    <script src="/scripts/lib/bootstrapValidator.min.js"></script>
+</body>
+</html>

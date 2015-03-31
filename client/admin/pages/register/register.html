@@ -1,0 +1,18 @@
+﻿<form id="divRegistrationForm" role="form">
+
+    <div class="form-group">
+        <label>email</label>
+        <input type="email" class="form-control" id="txtEmail" placeholder="email" required />
+    </div>
+    <div class="form-group">
+        <label>Password</label>
+        <input type="password" class="form-control" id="txtPassword" placeholder="password" required />
+        <input type="password" class="form-control" id="txtConfirm" placeholder="confirm" required />
+    </div>
+    <button id="btnRegister" class="btn btn-primary" >Register</button>
+    
+</form>
+<script> 
+    require(['pages/register/register'], function (p) { p.init(); });
+</script>
+

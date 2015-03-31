@@ -1,0 +1,10 @@
+﻿ {
+ "name": "admin",
+ "version": "0.0.1",
+ "description": "admin site",
+ "main": "index.html",
+ "author": {
+ "name": "Daniel Hindi",
+ "email": "daniel@madaincorp.com"
+ }
+}

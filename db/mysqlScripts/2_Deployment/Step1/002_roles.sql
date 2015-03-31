@@ -1,0 +1,7 @@
+﻿CREATE TABLE IF NOT EXISTS `roles` (
+  `roleId` INT(11) NOT NULL,
+  `name` VARCHAR(150) NOT NULL,
+  `description` VARCHAR(500) NOT NULL,
+  PRIMARY KEY (`roleId`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
