@@ -9,7 +9,7 @@ function apiHandler(route, testPath) {
         console.warn('> Warning: Test undefined for ' + route);
     else
         this.testPath = testPath;
-    
+
     /// make sure path starts with /api/
     if (route.indexOf('/') != 0) route = '/' + route;
     if (route.indexOf('/api') != 0) route = '/api' + route;
@@ -28,32 +28,39 @@ function apiHandler(route, testPath) {
 }
 
 apiHandler.prototype = {
-    requireTest: function () { return this.testPath? require(this.testPath):{ test: function () { return true } }; }
-
-    , validateData: function ( req, res, callback ) {
-        callback (new Error( "validateData not implemented for " + this.route ));
+    requireTest: function () {
+        return this.testPath ? require(this.testPath) : {
+            test: function () {
+                return true
+            }
+        };
     }
-
-    , _checkUserPermissions : function (permission, userId, callback) {
+    , validateData: function (req, res, callback) {
+        callback(new Error("validateData not implemented for " + this.route));
+    }
+    , _checkUserPermissions: function (permission, userId, callback) {
         apiAuthorization.checkUserPermission(permission, userId, callback);
     }
-    ,init: function(req,res){
+    , init: function (req, res) {
         /// used to initialize the api before logic run
     }
     , _createHandler: function (verbHandler) {
         var t = this;
-        var validatationWrapper = function(req,res){
-            t.init(req,res);
-            if (t.validateData (req,res)){
+        var validatationWrapper = function (req, res) {
+            t.init(req, res);
+            if (t.validateData(req, res)) {
 
                 if (t.requiresPermission != undefined && t.requiresPermission.length > 0) {
 
-                    t._checkUserPermissions(t.requiresPermission,req.user.userId ,function (err, result) {
+                    t._checkUserPermissions(t.requiresPermission, req.user.userId, function (err, result) {
                         if (err) {
                             res.send(500, err);
                         }
                         else if (result == null) {
-                            errorResponse.sendAuthorizationError(res,"You are not authorized",{"message": "apiHandler: You are not authorized", "code": "NoPermission"});
+                            errorResponse.sendAuthorizationError(res, "You are not authorized", {
+                                "message": "apiHandler: You are not authorized",
+                                "code": "NoPermission"
+                            });
                             console.log("You are not authorized");
                         }
                         else if (result == true) {
@@ -65,14 +72,14 @@ apiHandler.prototype = {
                     verbHandler(req, res);
             }
             else
-                errorResponse.sendValidationError(res,"Invalid Parameters");
+                errorResponse.sendValidationError(res, "Invalid Parameters");
         };
 
         return validatationWrapper;
 
     }
     , register: function (app) {
-        
+
         console.log('register api', this.route);
         this.app = app;
         if (this.get) {
@@ -86,7 +93,7 @@ apiHandler.prototype = {
             app.put(this.route + "/:key", this.authenticate(), this._createHandler(this.put));
         if (this.delete)
             app.delete(this.route + "/:key", this.authenticate(), this._createHandler(this.delete));
-        
+
         if (this._afterRegister)
             this._afterRegister();
     }
@@ -98,37 +105,36 @@ apiHandler.prototype = {
     , handleGenericError: function (req, res, err) {
         var exposeErrorDetails = true; // TODO: read from configuration
         if (exposeErrorDetails) {
-            res.send(400, ({ message: JSON.stringify(err), code: 'error' }));
+            res.send(400, ({message: JSON.stringify(err), code: 'error'}));
         }
         else {
-            res.send(500, ({ message: 'An error has occurred', code: 'error' }));
+            res.send(500, ({message: 'An error has occurred', code: 'error'}));
         }
     }
-    
     , authenticate: function () {
         var _self = this;
         if (this.requiresAuthentication) {
             return function (req, res, next) {
-                passport.authenticate('token', { session: false }, function (err, user, info) {
-                    if (err) {
+                passport.authenticate('token', {session: false}, function (err, user, info) {
+                    if (err)
                         return next(err);
-                    }
-                    if (!user) {
+                    else if (!user)
                         return errorResponse.sendAuthenticationError(res, "invalid user token or auth", null);
-                    }
-                    if (user.deletedOn || !user.isActive || (user.isActive[0] == 0)) {
+                    else if (user.deletedOn || !user.isActive || (user.isActive[0] == 0))
                         return errorResponse.sendAuthorizationError(res, "account suspended", null);
+                    else {
+                        req.user = user;
+                        _self.authorize()(req, res, next);
                     }
-                    req.user = user;
-                    _self.authorize()(req, res, next);
                 })(req, res, next);
             }
         }
         else {
-            return function (req, res, next) { next(); }
+            return function (req, res, next) {
+                next();
+            }
         }
     }
-    
     , authorize: function () {
         var _self = this;
         return function (req, res, next) {
@@ -154,6 +160,6 @@ apiHandler.prototype = {
             }
         }
     }
-}
+};
 
 module.exports = apiHandler;

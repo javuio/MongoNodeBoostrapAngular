@@ -1,0 +1,104 @@
+﻿<div ng-controller="dashboardCtrl">
+    <div class="row">
+        <div class="col-lg-12" >
+            <p class="pull-right floatingText">Calculations for the past 30 days</p>
+        </div>
+    </div>
+    <div class="row tiles">
+
+        <div class="col-lg-6 col-md-6 col-sm-6">
+            <div class="row">
+                <div class="col-lg-6 col-md-6 col-sm-6">
+                    <div class="mini-stat clearfix homeClickable mini-stat-info">
+                        <span id="total" class="count" >{{stats.total}}</span>
+                        TOTAL
+                    </div>
+                    <!--/.TOTAL PROCESSED-->
+                </div>
+                <!--/.col-->
+
+                <div class="col-lg-6 col-md-6 col-sm-6" >
+                    <div class="mini-stat clearfix homeClickable mini-stat-info">
+                        <span id="avg" class="count">{{stats.avg}}</span>
+                        AVERAGE
+                    </div>
+                    <!--/.NEW CUSTOMERS -->
+                </div>
+                <!--/.col-->
+            </div>
+            <div class="row">
+                <div class="col-lg-6 col-md-6 col-sm-6" id="dvSpentByCustomers">
+                    <div class="mini-stat clearfix homeClickable mini-stat-info">
+                        <span id="highest" class="count">{{stats.highest}}</span>
+                        HIGHEST
+                    </div>
+                    <!--/.REWARDS EARNED-->
+                </div>
+                <!--/.col-->
+
+                <div class="col-lg-6 col-md-6 col-sm-6" id="dvNumberOfCustomers">
+                    <div class="mini-stat clearfix homeClickable mini-stat-info">
+                        <span id="lowest" class="count">{{stats.lowest}}</span>
+                        LOWEST
+                    </div>
+                    <!--/.SIGNED UP WITH YOU-->
+                </div>
+                <!--/.col-->
+            </div>
+        </div>
+        <div class="col-lg-6 col-md-6 col-sm-6">
+            <section class="panel">
+                <div class="panel-body tasks-bar">
+                    <div class="task-info clearfix VcenterContainer">
+                        <div class="desc pull-left">
+                            <h5>NUMBER OF TRANSACTIONS</h5>
+
+                            <p id="count">{{stats.count}}</p>
+                        </div>
+                        <img class="pull-right VcenterHelper" src="/images/chart1.png"/>
+                    </div>
+                    <div class="task-info clearfix VcenterContainer">
+                        <div class="desc pull-left">
+                            <h5>NEW USERS </h5>
+
+                            <p>{{stats.newUsers}}</p>
+                        </div>
+                    <span id="chartNewCustomers" class="notification-pie-chart pull-right VcenterHelper"
+                          data-percent="0">
+                        <span class="percent"></span>
+                    </span>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12">
+            <section class="panel">
+                <header class="panel-heading">
+                    RECENT EVENTS
+                </header>
+                <div id="upCommingOffersPanel" class="panel-body">
+
+                    <table id="tblRecentEvents" class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th>Created On</th>
+                            <th>Event</th>
+                            <th>Created By</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="event in recentEvents">
+                                <td>{{event.createdOn | date:'MM/dd/yyyy'}} </td>
+                                <td>{{event.event}}</td>
+                                <td >{{event.createdBy}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </div>
+
+    </div>
+</div>

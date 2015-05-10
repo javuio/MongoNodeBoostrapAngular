@@ -20,7 +20,7 @@ function createAPI( app ) {
 
     handler.post = function ( req, res ) {
         var redirectPage = req.body.redirectPage;
-        users.getUserByUsername( req.body.username, function ( errUser, resultUser ) {
+        users.getUsers( {email:req.body.username}, function ( errUser, resultUser ) {
                     if ( errUser )
                         errorResponse.sendError( res, 500, errUser );
                     else if ( resultUser && resultUser.userId != null ) {

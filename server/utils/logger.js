@@ -7,7 +7,7 @@ wLogger.init = function (config) {
     wLogger.addColors({ debug: 'grey', info: 'cyan', silly: 'magenta', event:'green', warn: 'yellow', error: 'red' });
     wLogger.remove(wLogger.transports.Console);
     wLogger.add(wLogger.transports.Console, { level: 'silly', colorize: true });
-    wLogger.add(wLogger.transports.File, { filename: '../node.log', maxsize: 1000, maxFiles: 3 });
+    wLogger.add(wLogger.transports.File, { filename: '../../node.log', maxsize: 5000, maxFiles: 3 });
     /*
     if (config.enableRemoteLogging) {
         if (!config.loggly || !config.loggly.subdomain ||

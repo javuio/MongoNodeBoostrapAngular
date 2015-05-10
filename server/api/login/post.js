@@ -9,23 +9,24 @@ function createAPI(app) {
     handler.requiresAuthentication = false;
     
     handler.validateData = function (req, res) {
-        return req.body && req.body.email && validator.isValidEmail(req.body.email) && req.body.password;
+        return req.body && req.body.email && validator.isValidEmail(req.body.email)
+            && req.body.password && req.body.password.length>1;
     };
 
 
     handler.post = function (req, res) {
-        users.getUser( { username: req.body.email, password: req.body.password, ip: req.originatingAddress }, function (err, user) {
-            if (err || !user) {
+        users.getUsers( { email: req.body.email, password: req.body.password }, function (err, users) {
+            if (err || !users || users.length==0) {
                 errorResponse.sendNotFoundError(res, "Invalid username or password");
             }
-            else if (user.deletedOn || !user.isActive) {
+            else if (users[0].deletedOn || !users[0].isActive) {
                 errorResponse.sendAuthorizationError(res, "account suspended", null);
             }
             else {
-                user.auth = cryptUtils.encryptAccessToken(user.accessToken);
-                delete user.accessToken;
+                users[0].auth = cryptUtils.encryptAccessToken(users[0]._id.toString());
+                delete users[0].accessToken;
 
-                res.json(user);
+                res.json(users[0]);
             }
         });
     };

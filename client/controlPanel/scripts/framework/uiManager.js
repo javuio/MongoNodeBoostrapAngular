@@ -1,98 +1,96 @@
 ﻿
-define('uiManager', function () {
-    var uiManager = {
+$javuApp.service('uiManager', function () {
+    var select={
+        byId:document.getElementById
+        ,byClass:document.getElementsByClassName
+        ,byTag: document.getElementsByTagName
+        ,query:document.querySelector
+    };
+    return {
         setPageTitle: function (title) {
-            $("#pageTitle:first").html(title);
+            select.byId("pageTitle").innerHTML =title;
             return this;
         },
         hideSidebar: function () {
-            $('#sidebar:first').addClass('hide-left-bar');
-            $('#main-content:first').addClass('merge-left');
-            $('#container:first').removeClass('open-right-panel');
+            select.byId('sidebar').classList.add('hide-left-bar');
+            select.byId('main-content').classList.add('merge-left');
+            select.byId('container').classList.remove('open-right-panel');
 
-            $('.right-sidebar:first').removeClass('open-right-bar');
+            select.query('.right-sidebar').classList.remove('open-right-bar');
 
-            $('.header:first').removeClass('merge-header');
+            select.query('.header').classList.remove('merge-header');
             return this;
         },
-        toggleSidebar:function(){
-            if($('#sidebar:first').is(":visible"))
-                this.hideSidebar();
-            else
-            this.showSidebar();
-        },
         showSidebar: function () {
-            $('#sidebar').removeClass('hide-left-bar');
-            $('#main-content').removeClass('merge-left');
+            select.byId('sidebar').classList.remove('hide-left-bar');
+            select.byId('main-content').classList.remove('merge-left');
             return this;
         },
         disableMenu: function () {
-            $('.sidebar-toggle-box .fa-bars').unbind("click");
-            $('.toggle-right-box .fa-bars').unbind("click");
+            select.query('.sidebar-toggle-box .fa-bars').unbind("click");
+            select.query('.toggle-right-box .fa-bars').unbind("click");
             return this;
         },
         enableMenu: function () {
-            $('.sidebar-toggle-box .fa-bars').click(function (e) {
+            select.query('.sidebar-toggle-box .fa-bars').onclick = function (e) {
 
-                var $sidebar = $('#sidebar:first')
+                var $sidebar = select.byId('sidebar');
                 $sidebar.toggleClass('hide-left-bar');
 
 
 
-                $('#main-content').toggleClass('merge-left');
+                select.byId('main-content').toggleClass('merge-left');
                 e.stopPropagation();
 
-                $('#container:first').removeClass('open-right-panel');
+                select.byId('container').classList.remove('open-right-panel');
 
-                $('.right-sidebar:first').removeClass('open-right-bar');
+                select.query('.right-sidebar').classList.remove('open-right-bar');
 
 
-                $('.header:first').removeClass('merge-header');
+                select.query('.header').classList.remove('merge-header');
 
-            });
-            $('.toggle-right-box .fa-bars').click(function (e) {
-                $('#container:first').toggleClass('open-right-panel');
-                $('.right-sidebar:first').toggleClass('open-right-bar');
-                $('.header:first').toggleClass('merge-header');
+            };
+            select.query('.toggle-right-box .fa-bars').onclick =function (e) {
+                select.byId('container').toggleClass('open-right-panel');
+                select.query('.right-sidebar').toggleClass('open-right-bar');
+                select.query('.header').toggleClass('merge-header');
                 e.stopPropagation();
-            });
+            };
             return this;
         },
         showBody: function () {
-            var $html = $('html:first');
-            if ($html.hasClass('hidden'))
-                $html.hide().removeClass('hidden').fadeIn('fast');
+            select.query('html').classList.remove('hidden');
             return this;
         },
         showSpinner: function (message, ttl) {
             if( typeof(message) != "string")
                 message = "please wait...";
-            var $loading = $("#div-loading:first");
-            $loading.html(message).show();
+            var $loading = $("#div-loading");
+            $loading.html(message).classList.remove('hidden');
             if(ttl) {
                 if(this.spinnerTimer) clearTimeout(this.spinnerTimer);
 
                 this.spinnerTimer = setTimeout(function () {
-                    $loading.hide();
+                    $loading.classList.add('hidden');
                 }, ttl);
             }
 
             return this;
         },
         hideSpinner: function () {
-            $("#div-loading:first").hide();
+            select.query("#div-loading").classList.add('hidden');
             return this;
         },
         showTopMenu: function () {
-            $(".top-menu:first").show();
+            select.query(".top-menu").classList.remove('hidden');
             return this;
         },
         hideTopMenu: function () {
-            $(".top-menu:first").hide();
+            select.query(".top-menu").classList.add('hidden');
             return this;
         },
         hideAlert:function () {
-            $('[role=alert]').removeClass().hide().html('');
+            select.query('[role=alert]').classList.add('hidden').html('');
         },
         showAlert: function (style, message, ctrl) {
 
@@ -104,24 +102,24 @@ define('uiManager', function () {
 
             var $msgCtl = null;
             if (ctrl) {
-                $msgCtl = $(ctrl);
+                $msgCtl = select.query(ctrl);
                 $msgCtl.attr('role', 'alert');
             }
             else
-                $msgCtl = $('[role=alert]:first');
+                $msgCtl = select.query('[role=alert]');
 
             $msgCtl.empty();
-            $msgCtl.hide();
+            $msgCtl.classList.add('hidden');
 
-            $msgCtl.removeClass();
-            $msgCtl.addClass('alert alert-dismissible alert-' + style);
+            $msgCtl.classList.remove();
+            $msgCtl.classList.add('alert alert-dismissible alert-' + style);
 
             $msgCtl.append('<button type="button" class="close" data-dismiss="alert">' +
             '<span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>' +
             message);
 
             $msgCtl.slideDown(function () {
-                $('html,body').animate({
+                select.query('html,body').animate({
                         scrollTop: $msgCtl.offset().top
                     },
                     'slow');
@@ -134,5 +132,5 @@ define('uiManager', function () {
         }
     };
 
-    return uiManager;
+
 });

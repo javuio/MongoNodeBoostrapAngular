@@ -1,0 +1,26 @@
+﻿CACHE MANIFEST
+# last updated 2014-09-05
+# v1.013
+
+### Explicitly cached 
+CACHE:
+/scripts/lib/bootstrap.min.js
+/scripts/lib/chart.min.js
+/scripts/lib/jquery.ba-hashchange.min.js
+/scripts/lib/jquery.min.js
+/scripts/lib/require.js
+
+/styles/bootstrap.min.css
+/scripts/lib/bootstrap.min.js
+#/favicon.ico
+#index.html
+#images/logo.png
+
+
+# Resources that require the user to be online.
+NETWORK:
+*
+
+# if / is offline then show the cached offline.html file
+FALLBACK:
+/	offline.html
