@@ -7,7 +7,7 @@
 function createAPI(app) {
     var apiHandler = require('../../apiHandler.js');
     var dashboard = new apiHandler('/api/controlPanel/dashboard');
-    //dashboard.requiresPermission = 'ControlPanelGeneralAccess';
+    dashboard.requiresPermission = 'ControlPanelGeneralAccess';
 
     dashboard.validateData = function (req, res) {
         return true;

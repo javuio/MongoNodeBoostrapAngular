@@ -28,12 +28,13 @@ for (var i = 0 ; i < config.staticContent.length; i++)  {
 
 /// Register error handler /////////////////////////////////////////////////////////
 if(!config.debugMode) {
+    /*
     require('longjohn'); // long stack trace
 
     process.on('uncaughtException', function (err) {
         console.error('!!! Caught exception: ', err);
     });
-
+*/
     app.use(function error(err, req, res, next) {
         // log it
         console.error(err, req.method, req.originalUrl);

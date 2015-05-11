@@ -5,6 +5,9 @@ var users = require( '../../../dao/users.js' );
 function createAPI( app ) {
     var handler = new apiHandler( '/api/admin/dashboard', '' );
 
+    handler.init = function(){
+      console.log('dash get stop');
+    };
     handler.requiresPermission = "AdminPortal";
 
     handler.validateData = function ( req, res ) {

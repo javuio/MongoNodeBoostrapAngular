@@ -1,4 +1,5 @@
 ﻿var cryptUtils = require('../utils/cryptUtils.js');
+var MongoClient = require('mDAL/mongodb/mongoClient');
 var mongoCollection = require("../da/mdbMainCollection.js");
 var col = mongoCollection('users');
 
@@ -10,6 +11,8 @@ module.exports = {
         if(query.password)
             query.password = cryptUtils.hashStdPassword( query.password);
 
+        if(typeof(query._id) == 'string')
+            query._id = MongoClient.prototype.convertToObjectID(query._id);
         col.find(query,callback);
 
     }
@@ -33,9 +36,9 @@ module.exports = {
                 callback(null, data);
         });
     }
-    , checkUserPermission: function (permissionName, userToken, userId, callback) {
+    , checkUserPermission: function (permissionName, email, callback) {
 
-        this.getUsers({token:userToken,userId:userId},function(err,data){
+        this.getUsers({email:email},function(err,data){
             if(err)
                 callback(err);
             else if(data.length == 0)
@@ -43,17 +46,19 @@ module.exports = {
             else {
                 var kill = false;
                 var threads=0;
-                for(roleName in data[0].roles)
+                for(var i in data[0].roles) {
+                    var roleName = data[0].roles[i];
                     threads++;
-                    role.checkRolePermission(roleName,permissionName,function(result){
+                    roles.checkRolePermission(roleName, permissionName, function (result) {
                         threads--;
-                        if(result){
-                            if(kill) return;
+                        if (result) {
+                            if (kill) return;
                             callback(null, result);
-                            kill=true;
+                            kill = true;
                             return;
                         }
                     });
+                }
                 while(threads)//dangerous
                     callback(null,false);
 

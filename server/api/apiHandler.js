@@ -38,8 +38,8 @@ apiHandler.prototype = {
     , validateData: function (req, res, callback) {
         callback(new Error("validateData not implemented for " + this.route));
     }
-    , _checkUserPermissions: function (permission, userId, callback) {
-        apiAuthorization.checkUserPermission(permission, userId, callback);
+    , _checkUserPermissions: function (permission, email, callback) {
+        apiAuthorization.checkUserPermission(permission, email, callback);
     }
     , init: function (req, res) {
         /// used to initialize the api before logic run
@@ -52,7 +52,7 @@ apiHandler.prototype = {
 
                 if (t.requiresPermission != undefined && t.requiresPermission.length > 0) {
 
-                    t._checkUserPermissions(t.requiresPermission, req.user.userId, function (err, result) {
+                    t._checkUserPermissions(t.requiresPermission, req.user.email, function (err, result) {
                         if (err) {
                             res.send(500, err);
                         }
@@ -142,7 +142,7 @@ apiHandler.prototype = {
                 if (_self.requiresPermission == '')
                     next();
                 else {
-                    _self._checkUserPermissions(_self.requiresPermission, req.user.userId, function (err, result) {
+                    _self._checkUserPermissions(_self.requiresPermission, req.user.email, function (err, result) {
                         if (err) {
                             return next(err);
                         }

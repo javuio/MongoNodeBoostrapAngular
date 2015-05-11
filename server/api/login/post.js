@@ -23,10 +23,15 @@ function createAPI(app) {
                 errorResponse.sendAuthorizationError(res, "account suspended", null);
             }
             else {
-                users[0].auth = cryptUtils.encryptAccessToken(users[0]._id.toString());
-                delete users[0].accessToken;
+                var u = users[0];
 
-                res.json(users[0]);
+                delete u.accessToken;
+                delete u.password;
+
+                u.auth = cryptUtils.encryptAccessToken(u.email);
+                u.userToken = cryptUtils.encryptAccessToken(u._id);
+
+                res.json(u);
             }
         });
     };

@@ -9,16 +9,18 @@ module.exports=
  {
     createTokenStrategy: function () {
         return new tokenStrategy({ usernameHeader: 'userToken', tokenHeader: 'auth' },
-            function (userToken, accessToken, done) {
-                var decryptedAccessToken = undefined;
+            function (userToken, auth, done) {
+                var email,id;
                 try {
-                    decryptedAccessToken = cryptUtils.decryptAccessToken(accessToken);
+                    email = cryptUtils.decryptAccessToken(auth);
+                    id= cryptUtils.decryptAccessToken(userToken);
                 }
                 catch (ex) {
                     return done(null, false);
                 }
 
-                users.getUsers({ userToken: userToken, accessToken: decryptedAccessToken }, function (err, users) {
+                //{ _id: userToken, accessToken: decryptedAccessToken }
+                users.getUsers({ _id: id, email: email}, function (err, users) {
                     if (err)
                         return done(err);
                     else if (users.length == 0)

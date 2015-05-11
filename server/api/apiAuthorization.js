@@ -1,9 +1,9 @@
 ﻿var users = require('../dao/users.js');
 
 apiAuthorization={
-    checkUserPermission :function(permissionName,userId,callback)
+    checkUserPermission :function(permissionName,email,callback)
     {
-        users.checkUserPermission(permissionName,null/*user token*/ , userId , function(err,result){
+        users.checkUserPermission(permissionName,email , function(err,result){
             if(err)
                 callback(err,null);
             else
