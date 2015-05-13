@@ -15,7 +15,7 @@ function createAPI(app) {
 
 
     handler.post = function (req, res) {
-        users.getUsers( { email: req.body.email, password: req.body.password }, function (err, users) {
+        users.getUsers( { email: req.body.email.toLowerCase(), password: req.body.password }, function (err, users) {
             if (err || !users || users.length==0) {
                 errorResponse.sendNotFoundError(res, "Invalid username or password");
             }

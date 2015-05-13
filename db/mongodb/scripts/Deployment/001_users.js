@@ -2,7 +2,7 @@ db.createCollection('users');
 db.users.createIndex({email:1,password:1},{ unique: true } );
 
 db.users.insert({
-  email:'CommonUser@javu.io'
+  email:'commonuser@javu.io' //must be lower case
 , password:'ecb6e2bdc7977e013b5c7c06c3406635'
 , loginMethod:'std'
 , firstName:'Common'
@@ -13,7 +13,7 @@ db.users.insert({
 });
 
 db.users.insert({
-  email:'CPUser@javu.io'
+  email:'cpuser@javu.io'//must be lower case
 , password:'ecb6e2bdc7977e013b5c7c06c3406635'
 , loginMethod:'std'
 , firstName:'ControlPanel'
@@ -24,7 +24,7 @@ db.users.insert({
 });
 
 db.users.insert({
-  email:'adminUser@javu.io'
+  email:'adminuser@javu.io'//must be lower case
 , password:'ecb6e2bdc7977e013b5c7c06c3406635'
 , loginMethod:'std'
 , firstName:'Admin'

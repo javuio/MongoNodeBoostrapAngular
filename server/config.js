@@ -43,10 +43,11 @@ var environments = {
         , module:"controlPanel"
         ,staticContent: [
             {route:'/', path:'/../client/controlPanel/'}
-            ,{route:'/scripts',path:'/../client/_shared/scripts/'}
+            ,{route:'/',path:'/../client/_shared/'}
+            /*,{route:'/scripts',path:'/../client/_shared/scripts/'}
             ,{route:'/styles', path:'/../client/_shared/styles/'}
             ,{route:'/images', path:'/../client/_shared/images/'}
-            ,{route:'/pages', path:'/../client/_shared/pages/'}
+            ,{route:'/pages', path:'/../client/_shared/pages/'}*/
         ]
         ,logging: {
             enableRemoteLogging: true,

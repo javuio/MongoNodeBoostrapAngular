@@ -138,26 +138,24 @@ apiHandler.prototype = {
     , authorize: function () {
         var _self = this;
         return function (req, res, next) {
-            if (_self.requiresPermission != undefined) {
-                if (_self.requiresPermission == '')
-                    next();
-                else {
-                    _self._checkUserPermissions(_self.requiresPermission, req.user.email, function (err, result) {
-                        if (err) {
-                            return next(err);
-                        }
-                        else if (result == null) {
-                            errorResponse.sendAuthorizationError(res, "You are not authorized", null)
-                        }
-                        else if (result == true) {
-                            next();
-                        }
-                    });
-                }
-            }
-            else {
+            if (typeof(_self.requiresPermission) == 'undefined'
+            || _self.requiresPermission == ''
+            || _self.requiresPermission == null)
                 errorResponse.sendAuthorizationError(res, "Secure API with no permissions", null);
+            else{
+                _self._checkUserPermissions(_self.requiresPermission, req.user.email, function (err, result) {
+                    if (err)
+                        return next(err);
+                    else if (result == null || !result)
+                        errorResponse.sendAuthorizationError(res, "You are not authorized", null);
+                    else if (result)
+                        next();
+                    else
+                        throw ("Unhandled Auth condition");
+                });
+
             }
+
         }
     }
 };
