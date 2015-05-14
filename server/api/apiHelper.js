@@ -14,8 +14,11 @@ module.exports = {
                 log.headers.password = p;
                 console.log(">> " + req.url);
             }
-            else
+            else{
+                console.log("./" + req.url);
                 logger.log('debug', req.url);
+            }
+
 
 
             next();  // call next() here to move on to next middleware/router

@@ -2,6 +2,7 @@
 var MongoClient = require('mDAL/mongodb/mongoClient');
 var mongoCollection = require("../da/mdbMainCollection.js");
 var col = mongoCollection('users');
+var async = require('async');
 
 var roles = require('./roles.js');
 
@@ -44,24 +45,24 @@ module.exports = {
             else if(data.length == 0)
                 callback(null,false);
             else {
-                var kill = false;
-                var threads=0;
-                for(var i in data[0].roles) {
-                    var roleName = data[0].roles[i];
-                    threads++;
-                    roles.checkRolePermission(roleName, permissionName, function (result) {
-                        threads--;
-                        if (result) {
-                            if (kill) return;
-                            callback(null, result);
-                            kill = true;
-                            return;
-                        }
-                    });
-                }
-                while(threads)//dangerous
-                    callback(null,false);
+                var hasPermission = false;
+                var setPermission = function(result){
+                    if(result){
+                        if(!hasPermission)
+                            callback(null,true); // no need to continue to wait just call the callback ony the first time
+                        hasPermission=result;
+                    }
+                };
 
+                var fnCalls = [];
+                for(var i in data[0].roles)
+                    fnCalls.push(
+                        function(){roles.checkRolePermission(data[0].roles[i], permissionName, setPermission);}
+                    );
+
+                async.parallel(fnCalls, function(){
+                    if(!hasPermission) callback(null,false); // if was true would have sent callback above
+                });
             }
         } );
 

@@ -70,10 +70,12 @@
                 //api.call( 1, 'users/logout', { token: authManager._currentUser.userToken });
                 this.setCurrentUser(null);
             }
+            localStorage.clear();
             this.logoutHandler();
         },
         logoutHandler: function () {
-            localStorage.clear();
+
+            window.location.hash='/login';
         } ,
         resetPassword: function (UserTokenname, callback) {
         }

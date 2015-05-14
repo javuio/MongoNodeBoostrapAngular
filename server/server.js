@@ -8,6 +8,9 @@ var http = require('http');
 var app = express();
 app.set('port', process.env.PORT || 3000);
 
+var compress = require('compression');
+app.use(compress());/// for gzip
+
 var bodyParser = require('body-parser');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));

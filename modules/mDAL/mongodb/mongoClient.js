@@ -24,7 +24,12 @@ mongoClient.prototype = {
             else {
                 self.db = db;
                 self.logger.debug('mongodb Initialized');
-                if (callback) callback(null, self.db);
+                if (callback){
+                    if(typeof (callback) == 'function' )
+                        callback(null, self.db);
+
+                }
+
             }
         });
     }
