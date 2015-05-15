@@ -141,8 +141,10 @@ apiHandler.prototype = {
             if (typeof(_self.requiresPermission) == 'undefined'
             || _self.requiresPermission == ''
             || _self.requiresPermission == null
-            || req['user'] == undefined
-            || req.user['email'] == undefined)
+            )
+                next();
+            else if( req['user'] == undefined
+                || req.user['email'] == undefined)
                 errorResponse.sendAuthorizationError(res, "Secure API with no permissions", null);
             else{
                 _self._checkUserPermissions(_self.requiresPermission, req.user.email, function (err, result) {

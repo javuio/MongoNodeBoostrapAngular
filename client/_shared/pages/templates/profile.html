@@ -1,32 +1,32 @@
-﻿<section class="panel">
+﻿<section class="panel" ng-controller="profileCtrl">
     <header class="panel-heading">Profile</header>
 
-    <form id="changePasswordForm" role="form" class="panel-body">
+    <form id="changePasswordForm" name="changePasswordForm" role="form" class="panel-body">
         <div class="form-group">
             <label for="firstName">First Name</label>
-            <input class="form-control" id="firstName" name="firstName" required placeholder="First Name">
+            <input class="form-control" id="firstName" ng-model="user.firstName" required placeholder="First Name">
         </div>
         <div class="form-group">
             <label for="lastName">Last Name</label>
-            <input class="form-control" id="lastName" name="lastName" required placeholder="Last Name">
+            <input class="form-control" id="lastName" ng-model="user.lastName" required placeholder="Last Name">
         </div>
 
         <div class="well">
             <div class="form-group">
                 <label for="currentPassword">Current password</label>
-                <input type="password" class="form-control" id="currentPassword" name="currentPassword" placeholder="Old Password">
+                <input type="password" class="form-control" ng-model="user.currentPassword" id="currentPassword" name="currentPassword" placeholder="Old Password">
             </div>
             <div class="form-group">
                 <label for="newPassword">New password</label>
-                <input type="password" class="form-control" id="newPassword" name="newPassword" placeholder="new Password">
+                <input type="password" class="form-control" ng-model="user.newPassword" id="newPassword" placeholder="new Password">
             </div>
             <div class="form-group">
                 <label for="confirmPassword">Confirm password</label>
-                <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" placeholder="confirm Password">
+                <input type="password" class="form-control" ng-model="confirmPassword" id="confirmPassword" name="confirmPassword" placeholder="confirm Password">
             </div>
         </div>
         <br />
-        <button id="saveButton" type="submit" class="btn btn-primary pull-right">Save</button>
+        <button id="saveButton" type="submit" class="btn btn-primary pull-right" ng-click="updateUser()">Save</button>
     </form>
 
 </section>

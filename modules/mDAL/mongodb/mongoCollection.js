@@ -61,7 +61,7 @@ mongoCollection.prototype = {
                 }
 
                 if (!doc.createdOn) doc.createdOn = new Date();
-                if (!doc.lastUpdated) doc.lastUpdated = new Date();
+                doc.lastUpdatedOn = new Date();
 
                 var updateQuery = undefined;
                 if (options && options.$inc) {
@@ -78,12 +78,7 @@ mongoCollection.prototype = {
                     updateQuery.$unset = options.$unset;
                 }
 
-                col.update(query, updateQuery, { multi: true }, function (error, result) {
-                    if (error)
-                        callback(error, null);
-                    else
-                        callback(null, result)
-                });
+                col.update(query, updateQuery, { multi: true }, callback);
             }
         })
     },
@@ -95,7 +90,7 @@ mongoCollection.prototype = {
         }
 
         if (!doc.createdOn) doc.createdOn = new Date();
-        if (!doc.lastUpdated) doc.lastUpdated = new Date();
+        doc.lastUpdatedOn = new Date();
 
         this._getCollectionInstance(function (err, col) {
             if (err)
@@ -107,7 +102,7 @@ mongoCollection.prototype = {
     },
     upsert: function (selector, doc, callback) {
         if (!doc.createdOn) doc.createdOn = new Date();
-        doc.lastUpdated = new Date();
+        doc.lastUpdatedOn = new Date();
 
         this.getCollection(function (err, col) {
             if (err) {

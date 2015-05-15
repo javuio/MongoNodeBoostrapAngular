@@ -100,22 +100,16 @@ module.exports = {
 
     , updateUser: function (user, callback) {
 
-        var cmd = mysql.createCommand('users_update');
-        cmd.addParam("_userToken", user.userToken);
-        cmd.addParam("_firstName", user.firstName);
-        cmd.addParam("_lastName", user.lastName);
-        cmd.addParam("_address", user.address);
-        cmd.addParam("_city", user.city);
-        cmd.addParam("_state", user.state);
-        cmd.addParam("_zip", user.zip);
-        cmd.addParam("_isActive", user.isActive);
-        cmd.addParam("_lastUpdatedBy", user.lastUpdatedBy);
+        var query = {_id:user._id};
+        var delta = {
+            firstName: user.firstName
+            ,lastName: user.lastName
+        };
+        if(user.newPassword) {
+            delta.password = cryptUtils.hashStdPassword(user.newPassword);
+            query.password = cryptUtils.hashStdPassword(user.currentPassword);
+        }
+        col.update(query,{$set:delta}, callback);
 
-        cmd.getDataObject(function (err, data) {
-            if (err)
-                callback(err);
-            else
-                callback(null, user);
-        });
     }
-}
+};

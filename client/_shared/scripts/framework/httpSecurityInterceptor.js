@@ -7,7 +7,7 @@
 // register the interceptor as a service
 // helps pass creds to api
 /// helps lick kickout unauthorized users
-$javuApp.factory('httpSecurityInterceptor', function ($q) {
+$javuApp.factory('httpSecurityInterceptor', ['$q',function ($q) {
     return {
         // optional method
         'request': function (config) {
@@ -49,7 +49,7 @@ $javuApp.factory('httpSecurityInterceptor', function ($q) {
             return $q.reject(e);
         }
     };
-});
+}]);
 
 /*
  $javuApp.run(function($http) {
