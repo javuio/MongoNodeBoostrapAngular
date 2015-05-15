@@ -1,7 +1,7 @@
-﻿$javuApp.controller('homePageProfileCtrl', ['$scope', 'authManager', function ($scope, authManager) {
+﻿$javuApp.controller('homePageProfileCtrl', ['$scope','$rootScope', 'authManager', function ($scope,$rootScope, authManager) {
 
         $scope.user = authManager.getCurrentUser();
-        authManager.currentUserChangedListeners.push(function (user) {
+        $rootScope.$on('userChanged',function (e,user) {
             $scope.user = user;
         });
 

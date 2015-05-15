@@ -1,13 +1,6 @@
-﻿$javuApp.service('authManager', ['$http', function ($http) {
+﻿$javuApp.service('authManager', ['$http','$rootScope', function ($http,$rootScope) {
     var authManager ={
         _currentUser: null,
-        currentUserChangedListeners:[],
-        _notifyListenersAboutChange: function(){
-            /*
-          for(fn in authManager.currentUserChangedListeners)
-            fn(authManager._currentUser);
-            */
-        },
         attemptAutoLogin: function () {
             var user = this.getCurrentUser();
             if (user)
@@ -53,7 +46,8 @@
                 localStorage.removeItem('user');
 
             authManager._currentUser = currentUser;
-            authManager._notifyListenersAboutChange();
+
+            $rootScope.$broadcast('userChanged',user);
         },
         isUserLoggedIn: function () {
             return (this.getCurrentUser() != null);
