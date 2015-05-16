@@ -1,6 +1,6 @@
 ﻿
 
-<section class="panel" style="max-width:800px;margin:auto; margin-top: 50px;">
+<section class="panel" ng-controller="registerCtrl" style="max-width:800px;margin:auto; margin-top: 50px;">
     <header class="panel-heading">
         Register
     </header>
@@ -9,28 +9,26 @@
         <form id="frmRegistrationForm" role="form" method="post" target="_top">
             <div class="form-group">
                 <label>First Name</label>
-                <input type="text" class="form-control" id="txtFirstName" placeholder="First Name" required />
+                <input type="text" class="form-control" ng-model="user.firstName" id="txtFirstName" placeholder="First Name" required />
             </div>
             <div class="form-group">
                 <label>Last Name</label>
-                <input type="text" class="form-control" id="txtLastName" placeholder="Last Name" required />
+                <input type="text" class="form-control" ng-model="user.lastName" id="txtLastName" placeholder="Last Name" required />
             </div>
             <div class="form-group">
                 <label>email</label>
-                <input type="email" class="form-control" id="txtEmail" placeholder="email" required />
+                <input type="email" class="form-control" id="txtEmail" ng-model="user.email" placeholder="email" required />
             </div>
             <div class="form-group">
                 <label>Password</label>
-                <input type="password" class="form-control" id="txtPassword" placeholder="password" pattern=".{6,30}" required title="password needs to be at least 6 characters long" />
-                <input type="password" class="form-control" id="txtConfirm" placeholder="confirm" required />
+                <input type="password" class="form-control" id="txtPassword" ng-model="user.password" placeholder="password" pattern=".{6,30}" required title="password needs to be at least 6 characters long" />
+                <input type="password" class="form-control" id="txtConfirm" ng-model="user.passwordConfirmation" placeholder="confirm" required />
             </div>
 
-            <button id="btnRegister" type="submit" class="btn btn-primary" >Subscribe</button>
+            <button id="btnRegister" type="submit" class="btn btn-primary" ng-click="register()" >Subscribe</button>
 
         </form>
     </div>
 
 </section>
-<script>
-    require(['/pages/register/register.js'], function (p) { p.init(); });
-</script>
+

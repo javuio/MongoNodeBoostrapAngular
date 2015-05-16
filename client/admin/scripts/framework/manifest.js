@@ -1,38 +1,52 @@
-﻿define(['dynamicContentLoader'], function (dynamicContentLoader) {
+﻿define(['dynamicContentLoader', 'uiManager'], function (dynamicContentLoader, uiManager) {
     var manifest = {
 
         dynamicLoader: null
 
         , pages: {
-            register: { pageUrl: '/pages/register/register.html' }
-            , login: { externalPage: true, mainMenuLabel: false, pageTitle: 'Login', pageUrl: '/login.html', jsFiles: [], cssFiles: [], callback: null }
-            , forgetPassword: { externalPage: true, mainMenuLabel: false, pageTitle: 'Forget Password', pageUrl: '/forgetPassword.html', jsFiles: [], cssFiles: [], callback: null }
-            , resetPassword: { externalPage: true, mainMenuLabel: false, pageTitle: 'Reset Password', pageUrl: '/resetPassword.html', jsFiles: [], cssFiles: [], callback: null }
-            , dashboard: { mainMenuLabel: 'Dashboard', pageTitle: 'Dashboard', icon: 'fa-dashboard', menuId: 'menuHome', pageUrl: '/pages/home/home.html', jsFiles: [], cssFiles: [], callback: null }
-            , manageUsers: { mainMenuLabel: 'Manage Users', pageTitle: 'Manage Users', icon: 'fa-users', menuId: 'menuManageUsers', pageUrl: '/pages/userManagement/userManagement.html', jsFiles: [], cssFiles: [], callback: null }
-            , profile: { mainMenuLabel: false, pageTitle: 'profile', icon: null, pageUrl: '/pages/profile/profile.html', jsFiles: [], cssFiles: [], callback: null }
-           }
-        , load: function (configName, segments) {
-            if (this.pages[configName].externalPage)
-                window.location = this.pages[configName].pageUrl;
-            else {
-                //to do with ayman
-                //make the selected menu active
-                $('#nav-accordion').find('li > a').removeClass("active");
-                $('#nav-accordion').find('#' + this.pages[configName].menuId + ' a').addClass("active");
-                //set the title for the current page
-                $("#pageTitle").text(this.pages[configName].pageTitle);
-
-                this.dynamicLoader.loadContentObj(this.pages[configName], segments);
+            register: {pageUrl: '/pages/register/register.html'}
+            , login: {externalPage: true, pageTitle: 'Login', pageUrl: '/pages/login/login.html'}
+            , forgetPassword: {pageTitle: 'Forget Password', pageUrl: '/pages/forgetPassword/forgetPassword.html'}
+            , resetPassword: {pageTitle: 'Reset Password', pageUrl: '/resetPassword.html'}
+            , dashboard: {
+                defaultPage: true,
+                mainMenuLabel: 'Dashboard',
+                pageTitle: 'Dashboard',
+                className: 'mnuDashboard',
+                menuId: 'menuDashboard',
+                pageUrl: '/pages/dashboard/dashboard.html'
             }
+            , page1: {
+                mainMenuLabel: 'Page 1',
+                pageTitle: 'Page 1',
+                menuId: 'mnuPage1',
+                pageUrl: '/pages/page1/page1.html'
+            }
+            , profile: {pageTitle: 'profile', pageUrl: '/pages/profile/profile.html'}
+            , '404': {pageTitle: 'Page not Found', pageUrl: '/pages/404/404.html'}
         }
-    }
+        , load: function (configName, segments) {
 
-    manifest.dynamicLoader = new dynamicContentLoader('dynamicContentContainer', manifest.pages);
+            if (configName == '')
+                configName = 'dashboard';
 
-    for (var config in manifest.pages)
+            if (typeof(this.pages[configName]) == 'undefined') {
+                console.log('configName "' + configName + '" was not found redirecting to 404');
+                configName = "404";
+
+            }
+            this.dynamicLoader.loadContentObj(this.pages[configName], segments);
+
+        }
+    };
+
+    manifest.dynamicLoader = new dynamicContentLoader('dynamicContentContainer', 'pageTitle', manifest.pages);
+
+    /* Important fix pageName because thats what would be used in the tag*/
+    for (var config in manifest.pages) {
         if (manifest.pages[config].pageUrl)
             manifest.pages[config].pageName = config;
+    }
 
     return manifest;
 });

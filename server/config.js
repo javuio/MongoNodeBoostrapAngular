@@ -74,7 +74,7 @@ var environments = {
     }
 };
 
-var config = process.argv[2] || environments['devControlPanel'];
+var config = process.argv[2] || environments['devAdmin'];
 
 /*
 if (config) {

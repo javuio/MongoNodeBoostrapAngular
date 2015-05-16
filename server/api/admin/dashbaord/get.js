@@ -1,35 +1,40 @@
-﻿var apiHandler = require( '../../apiHandler.js' );
-var errorResponse = require( '../../errorResponse.js' );
-var users = require( '../../../dao/users.js' );
+﻿/**
+ * Created by Daniel on 1/1/2015.
+ */
 
-function createAPI( app ) {
-    var handler = new apiHandler( '/api/admin/dashboard', '' );
+//var userDAO = require('../../dao/dashboard.js');
 
-    handler.init = function(){
-      console.log('dash get stop');
-    };
-    handler.requiresPermission = "AdminPortal";
+function createAPI(app) {
+    var apiHandler = require('../../apiHandler.js');
+    var dashboard = new apiHandler('/api/admin/dashboard');
+    dashboard.requiresPermission = 'AdminPortalGeneralAccess';
 
-    handler.validateData = function ( req, res ) {
+    dashboard.validateData = function (req, res) {
         return true;
     };
 
-    handler.securityCheck = function ( req, res ) {
-        return true;
-    };
-
-    handler.get = function ( req, res ) {
-        if ( handler.validateData( req, res ) ) {
-            if ( handler.securityCheck( req, res ) ) {
+    dashboard.get = function (req, res) {
+        console.log('got dash');
+        var mockData =
+        {
+            stats: {
+                total: 9999
+                , count: 555
+                , lowest: 11
+                , highest: 88
+                , newUsers: 77
 
             }
-            else
-                errorResponse.sendAuthorizationError( res, "not authorised" );
-        }
-        else
-            errorResponse.sendValidationError( res, "Invalid Parameters" );
-    }
-    return handler;
-};
+            , recentEvents: [
+            {createdOn: new Date()-2,createdBy:"User 1",event:"Created a new javu.io project"}
+            ,{createdOn: new Date()-1,createdBy:"User 2",event:"Ran a test run"}
+            ,{createdOn: new Date(),createdBy:"User 3",event:"ready to start coding"}
+        ]
+        };
+        res.json(mockData);
+    };
 
+    return dashboard;
+}
 module.exports = createAPI;
+

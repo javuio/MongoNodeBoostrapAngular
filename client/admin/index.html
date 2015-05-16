@@ -12,15 +12,15 @@
 
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
-    <!--<script type="javascript" src="/scripts/lib/bootstrap.min.js" ></script>-->
 
     <!--Core CSS -->
     <!-- Custom styles for this template -->
     <link href="/styles/style.css" rel="stylesheet">
     <link href="/styles/style-responsive.css" rel="stylesheet" />
 
+
 </head>
-<body>
+<body ng-cloak>
     <section id="container">
         <!--header start-->
         <header class="header fixed-top clearfix">
@@ -34,20 +34,28 @@
 
             <!--logo end-->
             <div class="nav notify-row" id="top_menu" style="margin-top:0 !important;" >
-                <h1 id="pageTitle"></h1>
+                <h1 id="pageTitle">Admin</h1>
             </div>
-            <div class="top-nav clearfix">
-                <!--search & user info start-->
-                <ul class="nav pull-right top-menu" ng-controller="profileCtrl">
-                    <!-- user login dropdown start-->
-                    <li id="ddlUserProfile" class="dropdown" >
-                        <a id="aProfileMenu" data-toggle="dropdown" class="dropdown-toggle" href="" aria-expanded="true">
+            <div class="top-nav clearfix" ng-controller="homePageProfileCtrl">
+                <ul class="nav pull-right top-menu" ng-show="!user.firstName" >
+                    <li>
+                        <a href="#/register" aria-expanded="true">
                             <img alt="" src="images/avatar1_small.jpg">
-                            <span id="currentUserName">{{user.username}}</span>
+                            <span>Register</span>
+                        </a>
+                    </li>
+                </ul>
+                <!--search & user info start-->
+                <ul class="nav pull-right top-menu"  ng-show="user.firstName" >
+                    <!-- user login dropdown start-->
+                    <li id="ddlUserProfile" dropdown >
+                        <a id="aProfileMenu" data-toggle="dropdown" dropdown-toggle href="" aria-expanded="true">
+                            <img alt="" src="images/avatar1_small.jpg">
+                            <span>{{user.firstName}}</span>
                             <b class="caret"></b>
                         </a>
                         <ul id="profileMenuItems" class="dropdown-menu extended logout" role="menu" aria-labelledby="aProfileMenu">
-                            <li><a role="menuitem" href="#profile" tabindex="-1">Profile</a></li>
+                            <li><a role="menuitem" href="#/profile" tabindex="-1">Profile</a></li>
                             <li><a id="profileLogout" role="menuitem" tabindex="-1" href="" ng-click="logout()" >Log Out</a></li>
                         </ul>
                     </li>
@@ -74,6 +82,7 @@
             <section id="pageContent" class="wrapper">
                 <div class="row">
                     <div role="alert"></div>
+
                     <div ng-view ng-cloak id="dynamicContentContainer" class="col-sm-12" >
                         <span id="sLoadingDC" class="floatingText"></span>
                     </div>
@@ -88,19 +97,17 @@
 
     <script type="text/javascript" src="/scripts/lib/angular.min.js"></script>
     <script type="text/javascript" src="/scripts/lib/angular-route.min.js"></script>
-    <script type="text/javascript" src="/scripts/lib/ui-bootstrap.min.js"></script>
-    <script>
-        var $javuApp = angular.module('javu',['ngRoute','ui.bootstrap']);
-    </script>
+    <script type="text/javascript" src="/scripts/lib/ui-bootstrap-0.13.0.min.js"></script>
 
     <!-- Page JS -->
-    <script type="text/javascript" src="routes.js"></script>
+    <script type="text/javascript" src="./app.js"></script>
+
     <script type="text/javascript" src="/scripts/framework/authManager.js"></script>
     <script src="/scripts/framework/httpSecurityInterceptor.js"></script>
     <script type="text/javascript" src="/scripts/framework/uiManager.js"></script>
 
-    <script type="text/javascript" src="/scripts/framework/profileCtrl.js"></script>
-
+    <!-- <script type="text/javascript" src="/scripts/framework/homePageProfileCtrl.js"></script>
+-->
     <script type="text/javascript" src="/scripts/lib/dateTimeFormater.js"></script>
 
 </body>
