@@ -36,9 +36,17 @@
             <div class="nav notify-row" id="top_menu" style="margin-top:0 !important;" >
                 <h1 id="pageTitle"></h1>
             </div>
-            <div class="top-nav clearfix">
+            <div class="top-nav clearfix" ng-controller="homePageProfileCtrl">
+                <ul class="nav pull-right top-menu" ng-show="!user.firstName" >
+                    <li>
+                        <a href="#/register" aria-expanded="true">
+                            <img alt="" src="images/avatar1_small.jpg">
+                            <span>Register</span>
+                        </a>
+                    </li>
+                </ul>
                 <!--search & user info start-->
-                <ul class="nav pull-right top-menu" ng-controller="homePageProfileCtrl" ng-show="user.firstName" >
+                <ul class="nav pull-right top-menu"  ng-show="user.firstName" >
                     <!-- user login dropdown start-->
                     <li id="ddlUserProfile" dropdown >
                         <a id="aProfileMenu" data-toggle="dropdown" dropdown-toggle href="" aria-expanded="true">

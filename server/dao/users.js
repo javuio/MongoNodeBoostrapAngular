@@ -18,9 +18,20 @@ module.exports = {
 
     }
     ,registerUser: function (user, callback) {
-        if(!(user.username && user.password))
+
+        if(!(user.email && user.password))
             callback ("username and password are required to register");
-        col.insert(user,callback);
+
+        var doc = { // tom make sure nothing else is saved
+            email: user.email.toLowerCase()
+            ,firstName: user.firstName
+            ,lastName: user.lastName
+            ,roles : user.roles
+            ,password : cryptUtils.hashStdPassword( user.password)
+            ,isActive: user.isActive
+        };
+
+        col.insert(doc,callback);
     }
 
     ,resetPassword: function (userId, userToken, password, callback) {
